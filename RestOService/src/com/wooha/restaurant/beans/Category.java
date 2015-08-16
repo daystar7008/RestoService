@@ -59,7 +59,7 @@ public class Category {
 		JSONObject categoryJson = new JSONObject();
 		categoryJson.put("id", getId());
 		categoryJson.put("description", getDescription());
-		categoryJson.put("deleteFlag", getDeleteFlag());
+		//categoryJson.put("deleteFlag", getDeleteFlag());
 		
 		return categoryJson.toString();
 	}

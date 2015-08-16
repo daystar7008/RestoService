@@ -44,6 +44,15 @@ public class TableDAO {
 		return tables;
 	}
 	
+	public boolean isTableOccupied(int tableId){
+		Table table = (Table) session.get(Table.class, tableId);
+		if(table != null && table.getOccupiedFlag() == 'Y'){
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		TableDAO dao = new TableDAO();
 		for(Table table : dao.getUnOccupiedTables())

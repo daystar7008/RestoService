@@ -80,7 +80,7 @@ public class DAOTest {
 	}
 	
 	public static void main(String[] args) {
-		new DAOTest().getBill();
+		new DAOTest().getItems();
 	}
 	
 }

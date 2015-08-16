@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.wooha.hibernate.util.HibernateUtil;
-import com.wooha.restaurant.beans.Category;
 import com.wooha.restaurant.beans.SubCategory;
 
 public class SubCategoryDAO {
@@ -30,10 +29,11 @@ public class SubCategoryDAO {
 		return subCategories;
 	}
 	
-	public List<SubCategory> getSubCategories(Category category){
+	public List<SubCategory> getSubCategories(int categoryId){
 		@SuppressWarnings("unchecked")
 		List<SubCategory> subCategories = session.createQuery("SELECT subCategory FROM com.wooha.restaurant.beans.SubCategory subCategory "
-															  + "JOIN subCategory.category = '" + category.getId()+ "'").list();
+															  + "JOIN subCategory.category category "
+															 + "WHERE category.id = " + categoryId).list();
 		
 		return subCategories;
 	}

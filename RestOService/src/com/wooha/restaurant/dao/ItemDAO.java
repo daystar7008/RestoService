@@ -7,7 +7,6 @@ import org.hibernate.Transaction;
 
 import com.wooha.hibernate.util.HibernateUtil;
 import com.wooha.restaurant.beans.Item;
-import com.wooha.restaurant.beans.SubCategory;
 
 public class ItemDAO {
 
@@ -24,11 +23,12 @@ public class ItemDAO {
 		return items;
 	}
 	
-	public List<Item> getItems(SubCategory subCategory){
+	public List<Item> getItems(long subCategoryId){
 		@SuppressWarnings("unchecked")
 		List<Item> items = (List<Item>) session.createQuery("SELECT item "
-															+ "FROM com.wooha.restaurant.beans.Item item JOIN item.subCategory subCategory"
-														  + " WHERE item.subCategory ='" + subCategory.getId() + "'").list();
+															+ "FROM com.wooha.restaurant.beans.Item item "
+															+ "JOIN item.subCategory subCategory "
+														   + "WHERE item.subCategory ='" + subCategoryId + "'").list();
 		
 		return items;
 	}
@@ -53,7 +53,7 @@ public class ItemDAO {
 	public static void main(String[] args) {
 		ItemDAO dao = new ItemDAO();
 		//List<Item> items = dao.getItems(new SubCategoryDAO().getSubCategory(15));
-		List<Item> items = dao.getItems(new SubCategoryDAO().getSubCategory(15));
+		List<Item> items = dao.getItems(15);
 		
 		for(Item item : items){
 			System.out.println(item.getDescription() + ":" + item.getPrice() + ":" + item.getSubCategory().getDescription() + ":" + item.getCategory().getDescription());

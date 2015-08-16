@@ -113,9 +113,15 @@ public class Bill {
 		billJson.put("totalAmount", getTotalAmount());
 		billJson.put("date", getDate().toString());
 		billJson.put("tableId", getTableId());
-		billJson.put("billDetails", new JSONArray(getBillDetails()));
 		billJson.put("closedFlag", getClosedFlag());
 		billJson.put("deleteFlag", getDeleteFlag());
+
+		JSONArray billDetailsJson = new JSONArray();
+		for(BillDetail billDetail : getBillDetails()){
+			billDetailsJson.put(billDetail);
+		}
+		
+		billJson.put("billDetails", billDetailsJson);
 		
 		return billJson.toString();
 	}

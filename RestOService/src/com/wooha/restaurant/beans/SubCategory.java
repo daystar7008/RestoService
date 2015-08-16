@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.json.JSONObject;
+
 @Entity(name = "rst_sub_categories")
 public class SubCategory {
 
@@ -56,6 +58,16 @@ public class SubCategory {
 
 	public void setDeleteFlag(char deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+	
+	@Override
+	public String toString(){
+		JSONObject subCategoryJson = new JSONObject();
+		subCategoryJson.put("id", getId());
+		subCategoryJson.put("categoryId", getCategory().getId());
+		subCategoryJson.put("description", getDescription());
+		
+		return subCategoryJson.toString();
 	}
 
 }

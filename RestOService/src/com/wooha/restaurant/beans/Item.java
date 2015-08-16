@@ -91,7 +91,7 @@ public class Item {
 		itemJson.put("subCategoryId", getSubCategory().getId());
 		itemJson.put("description", getDescription());
 		itemJson.put("price", getPrice());
-		itemJson.put("deleteFlag", getDeleteFlag());
+		//itemJson.put("deleteFlag", getDeleteFlag());
 		
 		return itemJson.toString();
 	}
