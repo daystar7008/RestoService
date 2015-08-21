@@ -13,6 +13,10 @@ import org.json.JSONObject;
 @Entity(name="rst_items")
 public class Item {
 
+	public static final String ID = "id";
+	public static final String DESCRIPTION = "description";
+	public static final String PRICE = "price";
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")

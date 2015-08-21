@@ -16,9 +16,19 @@ public class BillDAO {
 		session = HibernateUtil.getSessionFactory().openSession();
 	}
 	
-	public List<Bill> getItems(){
+	public List<Bill> getBills(){
 		@SuppressWarnings("unchecked")
 		List<Bill> bills = (List<Bill>)session.createCriteria(Bill.class).list();
+		
+		return bills;
+	}
+	
+	public List<Bill> getUnClosedBills(){
+		@SuppressWarnings("unchecked")
+		List<Bill> bills = session.createQuery("SELECT bill "
+											   + "FROM com.wooha.restaurant.beans.Bill bill "
+											  + "WHERE bill.closedFlag='N' "
+											    + "AND bill.tableId <> '' ").list();
 		
 		return bills;
 	}
@@ -48,15 +58,23 @@ public class BillDAO {
 		}
 	}
 	
+	public void closeBill(String billId){
+		if(billId != null){
+			Bill bill = getBill(billId);
+			bill.setClosedFlag('Y');
+			updateBill(bill);
+		}
+	}
+	
 	public static void main(String[] args) {
-		//BillDAO dao = new BillDAO();
-		/*for(Bill bill : dao.getItems()){
+		BillDAO dao = new BillDAO();
+		for(Bill bill : dao.getUnClosedBills()){
 			System.out.println(bill.getId() + ":" + bill.getTotalAmount());
 			System.out.println("-----------------------------------------");
-			for(BillDetail details : bill.getBillDetails()){
+			/*for(BillDetail details : bill.getBillDetails()){
 				System.out.println(details.getItem().getDescription() + ":" + details.getAmount());
-			}
-		}*/
+			}*/
+		}
 		//System.out.println(dao.getBill("1").getTotalAmount());
 		
 	}

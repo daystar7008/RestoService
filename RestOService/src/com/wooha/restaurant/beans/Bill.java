@@ -15,6 +15,14 @@ import org.json.JSONObject;
 @Entity(name = "rst_bill_master")
 public class Bill {
 
+	public static final String ID = "id";
+	public static final String BILLER_NAME = "billerName";
+	public static final String TOTAL_AMOUNT = "totalAmount";
+	public static final String DATE = "date";
+	public static final String TABLE_ID = "tableId";
+	public static final String BILL_DETAILS = "billDetails";
+	public static final String CLOSED_FLAG = "closedFlag";
+	
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -108,17 +116,31 @@ public class Bill {
 	@Override
 	public String toString(){
 		JSONObject billJson = new JSONObject();
-		billJson.put("id", getId());
-		billJson.put("billerName", getBillerName());
-		billJson.put("totalAmount", getTotalAmount());
-		billJson.put("date", getDate().toString());
-		billJson.put("tableId", getTableId());
-		billJson.put("closedFlag", getClosedFlag());
+		billJson.put(ID, getId());
+		billJson.put(BILLER_NAME, getBillerName());
+		billJson.put(TOTAL_AMOUNT, getTotalAmount());
+		billJson.put(DATE, getDate().toString());
+		billJson.put(TABLE_ID, getTableId());
+		billJson.put(CLOSED_FLAG, Character.toString(getClosedFlag()));
 		billJson.put("deleteFlag", getDeleteFlag());
 
 		JSONArray billDetailsJson = new JSONArray();
 		for(BillDetail billDetail : getBillDetails()){
-			billDetailsJson.put(billDetail);
+			JSONObject billDetailJson = new JSONObject();
+			JSONObject itemJson = new JSONObject();
+			
+			billDetailJson.put(BillDetail.ID, billDetail.getId());
+			billDetailJson.put(BillDetail.QUANTITY, billDetail.getQuantity());
+			billDetailJson.put(BillDetail.AMOUNT, billDetail.getAmount());
+			
+			Item item = billDetail.getItem();
+			itemJson.put(Item.ID, item.getId());
+			itemJson.put(Item.DESCRIPTION, item.getDescription());
+			itemJson.put(Item.PRICE, item.getPrice());
+			
+			billDetailJson.put(BillDetail.ITEM, itemJson);
+			
+			billDetailsJson.put(billDetailJson);
 		}
 		
 		billJson.put("billDetails", billDetailsJson);

@@ -14,6 +14,11 @@ import org.json.JSONObject;
 @Entity(name = "rst_bill_details")
 public class BillDetail {
 
+	public static final String ID = "id";
+	public static final String ITEM = "item";
+	public static final String QUANTITY = "quantity";
+	public static final String AMOUNT = "amount";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -88,7 +93,11 @@ public class BillDetail {
 	public String toString(){
 		JSONObject billDetailJson = new JSONObject();
 		billDetailJson.put("id", getId());
-		billDetailJson.put("billId", getBill().getId());
+		
+		Bill bill = getBill();
+		if(bill != null)
+			billDetailJson.put("billId", bill.getId());
+		
 		billDetailJson.put("item", new JSONObject(getItem()));
 		billDetailJson.put("quantity", getQuantity());
 		billDetailJson.put("amount", getAmount());
